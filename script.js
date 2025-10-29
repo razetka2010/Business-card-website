@@ -1,9 +1,12 @@
-// Конфигурация Telegram (ЗАМЕНИ ЭТИ ДАННЫЕ!)
+// Конфигурация Telegram
 const TELEGRAM_CONFIG = {
-    botToken: '8368222584:AAHyKAqlp40ZurJegwuhkX2psVSG6GTpZ1s', // Токен бота от @BotFather
-    chatId: '5623324059', // Твой Chat ID от @userinfobot
+    botToken: '8368222584:AAHyKAqlp40ZurJegwuhkX2psVSG6GTpZ1s', // Токен бота
+    chatId: '5623324059', // Твой Chat ID
     apiUrl: 'https://api.telegram.org/bot'
 };
+
+// Защита от спама
+let lastSubmissionTime = 0;
 
 // Основная инициализация
 document.addEventListener('DOMContentLoaded', function() {
@@ -55,6 +58,14 @@ function initFormHandler() {
         const submitBtn = this.querySelector('.submit-btn');
         const originalText = submitBtn.innerHTML;
         
+        // Защита от спама
+        const currentTime = Date.now();
+        if (currentTime - lastSubmissionTime < 30000) { // 30 секунд
+            showFormStatus('error', '❌ Пожалуйста, подождите 30 секунд перед следующим сообщением', statusElement);
+            return;
+        }
+        lastSubmissionTime = currentTime;
+        
         // Получаем данные формы
         const formData = new FormData(this);
         const data = {
@@ -84,6 +95,9 @@ function initFormHandler() {
                 submitBtn.innerHTML = '<i class="fas fa-check"></i> Отправлено!';
                 submitBtn.style.background = 'linear-gradient(45deg, #2ecc71, #27ae60)';
                 
+                // Показываем уведомление
+                showNotification('Сообщение успешно отправлено!', 'success');
+                
                 // Очищаем форму через 3 секунды
                 setTimeout(() => {
                     form.reset();
@@ -104,25 +118,21 @@ function initFormHandler() {
                 throw new Error('Ошибка отправки в Telegram');
             }
             
-} catch (error) {
-    console.error('Полная ошибка отправки:', error);
-    console.log('Данные которые отправлялись:', data);
-    showFormStatus('error', '❌ Ошибка отправки. Пожалуйста, напишите мне напрямую в Telegram.', statusElement);
-    submitBtn.innerHTML = originalText;
-    submitBtn.disabled = false;
-    submitBtn.classList.remove('sending-animation');
-    submitBtn.style.background = '';
-
+        } catch (error) {
+            console.error('Ошибка отправки:', error);
+            showFormStatus('error', '❌ Ошибка отправки. Пожалуйста, попробуйте еще раз или напишите мне напрямую в Telegram.', statusElement);
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('sending-animation');
+            submitBtn.style.background = '';
             
-            // Через 5 секунд скрываем ошибку
-            setTimeout(() => {
-                hideFormStatus(statusElement);
-            }, 5000);
+            // Показываем уведомление об ошибке
+            showNotification('Ошибка отправки сообщения', 'error');
         }
     });
 }
 
-// Получение IP адреса (дополнительная информация)
+// Получение IP адреса
 async function getIP() {
     try {
         const response = await fetch('https://api.ipify.org?format=json');
@@ -169,21 +179,20 @@ function isValidEmail(email) {
     return emailRegex.test(email);
 }
 
-// Отправка в Telegram (исправленная версия)
-// Отправка в Telegram (максимально простая версия)
+// Отправка в Telegram
 async function sendToTelegram(data) {
-    const message = `НОВОЕ СООБЩЕНИЕ С САЙТА
+    const message = `📨 НОВОЕ СООБЩЕНИЕ С САЙТА
 
-Имя: ${data.name}
-Email: ${data.email}
-Тема: ${data.subject}
+👤 Имя: ${data.name}
+📧 Email: ${data.email}
+📝 Тема: ${data.subject}
 
-Сообщение:
+💬 Сообщение:
 ${data.message}
 
-Время: ${data.timestamp}
-IP: ${data.ip}
-Сайт: razetka2010.github.io`;
+⏰ Время: ${data.timestamp}
+🌐 IP: ${data.ip}
+🔗 Сайт: razetka2010.github.io`;
     
     const url = `${TELEGRAM_CONFIG.apiUrl}${TELEGRAM_CONFIG.botToken}/sendMessage`;
     
@@ -196,7 +205,6 @@ IP: ${data.ip}
             body: JSON.stringify({
                 chat_id: TELEGRAM_CONFIG.chatId,
                 text: message
-                // Убрали disable_web_page_preview на всякий случай
             })
         });
         
@@ -214,32 +222,6 @@ IP: ${data.ip}
         console.error('Telegram API error:', error);
         return false;
     }
-}
-
-// Экранирование для MarkdownV2 (исправленная версия)
-function escapeMarkdown(text) {
-    if (!text) return '';
-    
-    return text.toString()
-        .replace(/\_/g, '\\_')
-        .replace(/\*/g, '\\*')
-        .replace(/\[/g, '\\[')
-        .replace(/\]/g, '\\]')
-        .replace(/\(/g, '\\(')
-        .replace(/\)/g, '\\)')
-        .replace(/\~/g, '\\~')
-        .replace(/\`/g, '\\`')
-        .replace(/\>/g, '\\>')
-        .replace(/\#/g, '\\#')
-        .replace(/\+/g, '\\+')
-        .replace(/\-/g, '\\-')
-        .replace(/\=/g, '\\=')
-        .replace(/\|/g, '\\|')
-        .replace(/\{/g, '\\{')
-        .replace(/\}/g, '\\}')
-        .replace(/\./g, '\\.')
-        .replace(/\!/g, '\\!')
-        .replace(/\-/g, '\\-');
 }
 
 // Управление статусом формы
@@ -334,19 +316,7 @@ function initHoverEffects() {
     });
 }
 
-// Глобальная функция для кнопок
-function scrollToSection(sectionId) {
-    const element = document.getElementById(sectionId);
-    if (element) {
-        const offsetTop = element.offsetTop - 80;
-        window.scrollTo({
-            top: offsetTop,
-            behavior: 'smooth'
-        });
-    }
-}
-
-// Показ уведомлений (дополнительная функция)
+// Всплывающие уведомления
 function showNotification(message, type = 'info') {
     const notification = document.createElement('div');
     const bgColor = type === 'success' ? 
@@ -366,6 +336,8 @@ function showNotification(message, type = 'info') {
         transform: translateX(100%);
         transition: transform 0.3s ease;
         box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        max-width: 300px;
+        text-align: center;
     `;
     notification.textContent = message;
     
@@ -386,3 +358,66 @@ function showNotification(message, type = 'info') {
         }, 300);
     }, 3000);
 }
+
+// Глобальная функция для кнопок
+function scrollToSection(sectionId) {
+    const element = document.getElementById(sectionId);
+    if (element) {
+        const offsetTop = element.offsetTop - 80;
+        window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+        });
+    }
+}
+
+// Дополнительные функции для улучшения UX
+
+// Анимация загрузки страницы
+window.addEventListener('load', function() {
+    document.body.style.opacity = '0';
+    document.body.style.transition = 'opacity 0.5s ease';
+    
+    setTimeout(() => {
+        document.body.style.opacity = '1';
+    }, 100);
+});
+
+// Обработка ошибок сети
+window.addEventListener('online', function() {
+    showNotification('Соединение восстановлено', 'success');
+});
+
+window.addEventListener('offline', function() {
+    showNotification('Отсутствует интернет-соединение', 'error');
+});
+
+// Предотвращение двойной отправки формы
+let isSubmitting = false;
+
+// Обновим обработчик формы для защиты от двойной отправки
+const originalFormHandler = initFormHandler;
+initFormHandler = function() {
+    const form = document.getElementById('contact-form');
+    if (!form) return;
+    
+    form.addEventListener('submit', async function(e) {
+        if (isSubmitting) {
+            e.preventDefault();
+            return;
+        }
+        
+        isSubmitting = true;
+        
+        try {
+            await originalFormHandler.call(this, e);
+        } finally {
+            setTimeout(() => {
+                isSubmitting = false;
+            }, 3000);
+        }
+    });
+};
+
+// Инициализируем улучшенный обработчик
+initFormHandler();
