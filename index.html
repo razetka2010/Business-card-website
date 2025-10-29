@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Razetka | Цифровое пространство</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Анимированный фон -->
+    <div class="animated-bg">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+    </div>
+
+    <!-- Навигация -->
+    <nav class="simple-nav">
+        <div class="nav-container">
+            <div class="nav-logo">Razetka</div>
+            <div class="nav-links">
+                <a href="#hero" class="nav-link">Главная</a>
+                <a href="#about" class="nav-link">Обо мне</a>
+                <a href="#philosophy" class="nav-link">Философия</a>
+                <a href="#contact" class="nav-link">Контакты</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Герой секция -->
+    <section id="hero">
+        <div class="hero-container">
+            <div class="main-title">
+                <h1 class="animated-title">Razetka</h1>
+                <div class="title-underline"></div>
+            </div>
+            
+            <div class="quote-container">
+                <div class="quote-card simple-glass fade-in">
+                    <p class="static-text">"Жизнь как детская рубашка короткая и обосраная, и как живёшь, спрашивает товарищ другого, как жил, вокруг одни дубы, и каждая свинья тебя сожрать хочет, вот психология того маленького среднего человека"</p>
+                    <div class="quote-author">— Razetka</div>
+                </div>
+            </div>
+
+            <div class="hero-actions">
+                <button class="pulse-btn" onclick="scrollToSection('about')">
+                    <span>Узнать больше</span>
+                    <div class="btn-glow"></div>
+                </button>
+                <button class="pulse-btn secondary" onclick="scrollToSection('contact')">
+                    <span>Связаться</span>
+                    <div class="btn-glow"></div>
+                </button>
+            </div>
+
+            <div class="scroll-indicator">
+                <div class="mouse">
+                    <div class="wheel"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция "Обо мне" -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title slide-in">Обо мне</h2>
+            
+            <div class="about-content">
+                <div class="about-card simple-glass fade-in">
+                    <div class="about-header">
+                        <div class="avatar">R</div>
+                        <div class="about-title">
+                            <h3>Razetka</h3>
+                            <p>Мыслитель & Наблюдатель</p>
+                        </div>
+                    </div>
+                    
+                    <div class="about-text">
+                        <p>Приветствую в моём уголке цифрового пространства. Я обычный человек, который пытается разобраться в этом безумном мире. Не философ, не гуру — просто наблюдатель.</p>
+                        
+                        <p>Мой псевдоним "Razetka" отражает суть — я как розетка, точка соединения разных мыслей, идей и энергий. Иногда проводящая ток, иногда — просто декоративный элемент на стене.</p>
+                        
+                        <div class="interests">
+                            <h4>Что меня занимает:</h4>
+                            <div class="interest-tags">
+                                <span class="tag">Философия</span>
+                                <span class="tag">Психология</span>
+                                <span class="tag">Технологии</span>
+                                <span class="tag">Искусство</span>
+                                <span class="tag">Музыка</span>
+                                <span class="tag">Наука</span>
+                            </div>
+                        </div>
+                        
+                        <div class="status">
+                            <div class="status-indicator"></div>
+                            <span>В настоящее время: Размышляю над смыслом бытия</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card simple-glass hover-lift">
+                        <div class="stat-icon">🎯</div>
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Аутентичность</div>
+                    </div>
+                    
+                    <div class="stat-card simple-glass hover-lift">
+                        <div class="stat-icon">💡</div>
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Мыслительный процесс</div>
+                    </div>
+                    
+                    <div class="stat-card simple-glass hover-lift">
+                        <div class="stat-icon">🌙</div>
+                        <div class="stat-number">∞</div>
+                        <div class="stat-label">Ночных размышлений</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Философская секция -->
+    <section id="philosophy">
+        <div class="container">
+            <h2 class="section-title slide-in">Философия существования</h2>
+            
+            <div class="philosophy-grid">
+                <div class="philosophy-card simple-glass hover-lift">
+                    <div class="card-icon">💭</div>
+                    <h3>Мысли</h3>
+                    <p>Каждая мысль — это искра в темноте. Иногда она освещает путь, иногда — слепит.</p>
+                </div>
+                
+                <div class="philosophy-card simple-glass hover-lift">
+                    <div class="card-icon">🌌</div>
+                    <h3>Пространство</h3>
+                    <p>Между словами и молчанием рождается истинный смысл бытия.</p>
+                </div>
+                
+                <div class="philosophy-card simple-glass hover-lift">
+                    <div class="card-icon">⚡</div>
+                    <h3>Энергия</h3>
+                    <p>Движение — единственная константа. Покой — это иллюзия уставшего ума.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Контакты -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title slide-in">Диалог</h2>
+            
+            <div class="contact-grid">
+                <div class="contact-info simple-glass fade-in">
+                    <h3>Прямая связь</h3>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope pulse-icon"></i>
+                        <span>raz_etka_2010@mail.ru</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone pulse-icon"></i>
+                        <span>+7 (908) 864-73-54</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt pulse-icon"></i>
+                        <span>Россия, Новый Уренгой</span>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="https://t.me/+Wr1gSP0zM4E3ODdi" class="social-btn telegram hover-lift" target="_blank">
+                            <i class="fab fa-telegram"></i>
+                            Telegram
+                        </a>
+                        <a href="https://github.com/razetka2010" class="social-btn github hover-lift" target="_blank">
+                            <i class="fab fa-github"></i>
+                            GitHub
+                        </a>
+                    </div>
+                </div>
+
+                <form class="contact-form simple-glass fade-in" id="contact-form">
+                    <div class="form-group">
+                        <input type="text" name="name" required maxlength="50">
+                        <label>Ваше имя</label>
+                        <div class="underline"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="email" name="email" required maxlength="50">
+                        <label>Ваш email</label>
+                        <div class="underline"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="text" name="subject" required maxlength="100">
+                        <label>Тема сообщения</label>
+                        <div class="underline"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <textarea name="message" rows="5" required maxlength="1000"></textarea>
+                        <label>Сообщение</label>
+                        <div class="underline"></div>
+                        <div class="char-counter">0/1000</div>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn hover-lift">
+                        <span>Отправить сообщение</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                    
+                    <div class="form-status" id="form-status"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Подвал -->
+    <footer class="simple-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-text">
+                    <p>"В цифровом пространстве мы все — просто код и эмоции"</p>
+                </div>
+                <div class="footer-copy">
+                    <p>&copy; <span id="currentYear"></span> Razetka</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
