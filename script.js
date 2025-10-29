@@ -104,13 +104,15 @@ function initFormHandler() {
                 throw new Error('Ошибка отправки в Telegram');
             }
             
-        } catch (error) {
-            console.error('Ошибка отправки:', error);
-            showFormStatus('error', '❌ Ошибка отправки. Пожалуйста, попробуйте еще раз или напишите мне напрямую.', statusElement);
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
-            submitBtn.classList.remove('sending-animation');
-            submitBtn.style.background = '';
+} catch (error) {
+    console.error('Полная ошибка отправки:', error);
+    console.log('Данные которые отправлялись:', data);
+    showFormStatus('error', '❌ Ошибка отправки. Пожалуйста, напишите мне напрямую в Telegram.', statusElement);
+    submitBtn.innerHTML = originalText;
+    submitBtn.disabled = false;
+    submitBtn.classList.remove('sending-animation');
+    submitBtn.style.background = '';
+
             
             // Через 5 секунд скрываем ошибку
             setTimeout(() => {
