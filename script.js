@@ -1,12 +1,13 @@
 // Конфигурация Telegram
 const TELEGRAM_CONFIG = {
-    botToken: '8368222584:AAHyKAqlp40ZurJegwuhkX2psVSG6GTpZ1s', // Токен бота
-    chatId: '5623324059', // Твой Chat ID
+    botToken: '8368222584:AAHyKAqlp40ZurJegwuhkX2psVSG6GTpZ1s',
+    chatId: '5623324059',
     apiUrl: 'https://api.telegram.org/bot'
 };
 
 // Защита от спама
 let lastSubmissionTime = 0;
+let isSubmitting = false;
 
 // Основная инициализация
 document.addEventListener('DOMContentLoaded', function() {
@@ -20,6 +21,58 @@ function initApp() {
     initScrollAnimations();
     initHoverEffects();
     initCharCounter();
+    initMobileMenu();
+    initPageLoader();
+}
+
+// Мобильное меню
+function initMobileMenu() {
+    const menuBtn = document.querySelector('.mobile-menu-btn');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+    
+    if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener('click', function() {
+            mobileMenu.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        });
+        
+        // Закрытие меню при клике на ссылку
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+        
+        // Закрытие меню при клике вне его
+        mobileMenu.addEventListener('click', function(e) {
+            if (e.target === mobileMenu) {
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+        
+        // Закрытие меню при нажатии ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    }
+}
+
+// Анимация загрузки страницы
+function initPageLoader() {
+    window.addEventListener('load', function() {
+        document.body.style.opacity = '0';
+        document.body.style.transition = 'opacity 0.5s ease';
+        
+        setTimeout(() => {
+            document.body.style.opacity = '1';
+        }, 100);
+    });
 }
 
 // Установка текущего года
@@ -55,16 +108,22 @@ function initFormHandler() {
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
         
+        if (isSubmitting) {
+            showFormStatus('error', '❌ Пожалуйста, дождитесь завершения предыдущей отправки', statusElement);
+            return;
+        }
+        
         const submitBtn = this.querySelector('.submit-btn');
         const originalText = submitBtn.innerHTML;
         
         // Защита от спама
         const currentTime = Date.now();
-        if (currentTime - lastSubmissionTime < 30000) { // 30 секунд
+        if (currentTime - lastSubmissionTime < 30000) {
             showFormStatus('error', '❌ Пожалуйста, подождите 30 секунд перед следующим сообщением', statusElement);
             return;
         }
         lastSubmissionTime = currentTime;
+        isSubmitting = true;
         
         // Получаем данные формы
         const formData = new FormData(this);
@@ -78,7 +137,10 @@ function initFormHandler() {
         };
         
         // Валидация
-        if (!validateForm(data, statusElement)) return;
+        if (!validateForm(data, statusElement)) {
+            isSubmitting = false;
+            return;
+        }
         
         // Показываем статус отправки
         showFormStatus('sending', '📨 Отправка сообщения...', statusElement);
@@ -113,6 +175,8 @@ function initFormHandler() {
                         counter.textContent = '0/1000';
                         counter.className = 'char-counter';
                     }
+                    
+                    isSubmitting = false;
                 }, 3000);
             } else {
                 throw new Error('Ошибка отправки в Telegram');
@@ -128,6 +192,7 @@ function initFormHandler() {
             
             // Показываем уведомление об ошибке
             showNotification('Ошибка отправки сообщения', 'error');
+            isSubmitting = false;
         }
     });
 }
@@ -150,6 +215,11 @@ function validateForm(data, statusElement) {
         return false;
     }
     
+    if (data.name.length > 50) {
+        showFormStatus('error', '❌ Имя слишком длинное (максимум 50 символов)', statusElement);
+        return false;
+    }
+    
     if (!data.email || !isValidEmail(data.email)) {
         showFormStatus('error', '❌ Пожалуйста, введите корректный email', statusElement);
         return false;
@@ -157,6 +227,11 @@ function validateForm(data, statusElement) {
     
     if (!data.subject || data.subject.length < 5) {
         showFormStatus('error', '❌ Пожалуйста, введите тему сообщения (минимум 5 символов)', statusElement);
+        return false;
+    }
+    
+    if (data.subject.length > 100) {
+        showFormStatus('error', '❌ Тема слишком длинная (максимум 100 символов)', statusElement);
         return false;
     }
     
@@ -257,6 +332,13 @@ function initSmoothScroll() {
             
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
+                // Закрываем мобильное меню если открыто
+                const mobileMenu = document.querySelector('.mobile-menu');
+                if (mobileMenu && mobileMenu.classList.contains('active')) {
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+                
                 const offsetTop = targetElement.offsetTop - 80;
                 
                 window.scrollTo({
@@ -307,22 +389,35 @@ function initHoverEffects() {
     const cards = document.querySelectorAll('.philosophy-card, .stat-card');
     cards.forEach(card => {
         card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-5px)';
+            if (window.innerWidth > 768) { // Только для десктопа
+                this.style.transform = 'translateY(-5px)';
+            }
         });
         
         card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0)';
+            if (window.innerWidth > 768) {
+                this.style.transform = 'translateY(0)';
+            }
         });
     });
 }
 
 // Всплывающие уведомления
 function showNotification(message, type = 'info') {
+    // Удаляем существующие уведомления
+    const existingNotifications = document.querySelectorAll('.custom-notification');
+    existingNotifications.forEach(notification => {
+        if (document.body.contains(notification)) {
+            document.body.removeChild(notification);
+        }
+    });
+    
     const notification = document.createElement('div');
     const bgColor = type === 'success' ? 
         'linear-gradient(45deg, #2ecc71, #27ae60)' : 
         'linear-gradient(45deg, #e74c3c, #c0392b)';
     
+    notification.className = 'custom-notification';
     notification.style.cssText = `
         position: fixed;
         top: 20px;
@@ -338,6 +433,7 @@ function showNotification(message, type = 'info') {
         box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         max-width: 300px;
         text-align: center;
+        font-size: 0.9rem;
     `;
     notification.textContent = message;
     
@@ -363,6 +459,13 @@ function showNotification(message, type = 'info') {
 function scrollToSection(sectionId) {
     const element = document.getElementById(sectionId);
     if (element) {
+        // Закрываем мобильное меню если открыто
+        const mobileMenu = document.querySelector('.mobile-menu');
+        if (mobileMenu && mobileMenu.classList.contains('active')) {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
         const offsetTop = element.offsetTop - 80;
         window.scrollTo({
             top: offsetTop,
@@ -371,53 +474,89 @@ function scrollToSection(sectionId) {
     }
 }
 
-// Дополнительные функции для улучшения UX
-
-// Анимация загрузки страницы
-window.addEventListener('load', function() {
-    document.body.style.opacity = '0';
-    document.body.style.transition = 'opacity 0.5s ease';
-    
-    setTimeout(() => {
-        document.body.style.opacity = '1';
-    }, 100);
-});
-
 // Обработка ошибок сети
-window.addEventListener('online', function() {
-    showNotification('Соединение восстановлено', 'success');
-});
+function initNetworkHandlers() {
+    window.addEventListener('online', function() {
+        showNotification('Соединение восстановлено', 'success');
+    });
 
-window.addEventListener('offline', function() {
-    showNotification('Отсутствует интернет-соединение', 'error');
-});
+    window.addEventListener('offline', function() {
+        showNotification('Отсутствует интернет-соединение', 'error');
+    });
+}
 
-// Предотвращение двойной отправки формы
-let isSubmitting = false;
-
-// Обновим обработчик формы для защиты от двойной отправки
-const originalFormHandler = initFormHandler;
-initFormHandler = function() {
-    const form = document.getElementById('contact-form');
-    if (!form) return;
-    
-    form.addEventListener('submit', async function(e) {
-        if (isSubmitting) {
-            e.preventDefault();
-            return;
-        }
-        
-        isSubmitting = true;
-        
-        try {
-            await originalFormHandler.call(this, e);
-        } finally {
+// Оптимизация для мобильных устройств
+function initMobileOptimizations() {
+    // Предотвращение масштабирования при фокусе на input
+    document.addEventListener('focusin', function(e) {
+        if (window.innerWidth <= 768 && (e.target.matches('input') || e.target.matches('textarea'))) {
             setTimeout(() => {
-                isSubmitting = false;
-            }, 3000);
+                e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
         }
     });
-};
+    
+    // Улучшение производительности на мобильных
+    if ('connection' in navigator) {
+        const connection = navigator.connection;
+        if (connection.saveData) {
+            // Отключаем некоторые анимации при экономии трафика
+            document.body.classList.add('save-data');
+        }
+    }
+}
 
-// Инициализируем улучшенный обработчик
-initFormHandler();
+// Инициализация дополнительных оптимизаций
+initNetworkHandlers();
+initMobileOptimizations();
+
+// Обработка изменения ориентации
+window.addEventListener('orientationchange', function() {
+    setTimeout(() => {
+        // Обновляем высоту герой секции при изменении ориентации
+        const hero = document.getElementById('hero');
+        if (hero) {
+            hero.style.minHeight = '100vh';
+        }
+    }, 300);
+});
+
+// Предотвращение контекстного меню на изображениях
+document.addEventListener('contextmenu', function(e) {
+    if (e.target.tagName === 'IMG') {
+        e.preventDefault();
+    }
+});
+
+// Логирование ошибок
+window.addEventListener('error', function(e) {
+    console.error('Global error:', e.error);
+});
+
+// Инициализация при полной загрузке страницы
+window.addEventListener('load', function() {
+    console.log('🚀 Сайт Razetka полностью загружен и готов к работе!');
+    
+    // Проверяем поддержку Service Worker для будущего использования
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js').then(function(registration) {
+            console.log('ServiceWorker зарегистрирован:', registration);
+        }).catch(function(error) {
+            console.log('ServiceWorker не зарегистрирован:', error);
+        });
+    }
+});
+
+// Улучшенный ресайз хендлер
+let resizeTimeout;
+window.addEventListener('resize', function() {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(function() {
+        // Обновляем мобильное меню при ресайзе
+        const mobileMenu = document.querySelector('.mobile-menu');
+        if (window.innerWidth > 768 && mobileMenu && mobileMenu.classList.contains('active')) {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }, 250);
+});
