@@ -168,21 +168,20 @@ function isValidEmail(email) {
 }
 
 // Отправка в Telegram (исправленная версия)
+// Отправка в Telegram (максимально простая версия)
 async function sendToTelegram(data) {
-    const message = `
-📨 НОВОЕ СООБЩЕНИЕ С САЙТА
+    const message = `НОВОЕ СООБЩЕНИЕ С САЙТА
 
-👤 Имя: ${data.name}
-📧 Email: ${data.email}
-📝 Тема: ${data.subject}
+Имя: ${data.name}
+Email: ${data.email}
+Тема: ${data.subject}
 
-💬 Сообщение:
+Сообщение:
 ${data.message}
 
-⏰ Время: ${data.timestamp}
-🌐 IP: ${data.ip}
-🔗 Отправлено с: razetka2010.github.io
-    `.trim();
+Время: ${data.timestamp}
+IP: ${data.ip}
+Сайт: razetka2010.github.io`;
     
     const url = `${TELEGRAM_CONFIG.apiUrl}${TELEGRAM_CONFIG.botToken}/sendMessage`;
     
@@ -194,20 +193,20 @@ ${data.message}
             },
             body: JSON.stringify({
                 chat_id: TELEGRAM_CONFIG.chatId,
-                text: message,
-                disable_web_page_preview: true
+                text: message
+                // Убрали disable_web_page_preview на всякий случай
             })
         });
         
         const result = await response.json();
         console.log('Telegram response:', result);
         
-        if (!result.ok) {
-            console.error('Telegram error:', result.description);
+        if (result.ok) {
+            return true;
+        } else {
+            console.error('Telegram error details:', result);
             return false;
         }
-        
-        return true;
         
     } catch (error) {
         console.error('Telegram API error:', error);
