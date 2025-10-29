@@ -1,7 +1,7 @@
 // Конфигурация Telegram (ЗАМЕНИ ЭТИ ДАННЫЕ!)
 const TELEGRAM_CONFIG = {
     botToken: '8368222584:AAHyKAqlp40ZurJegwuhkX2psVSG6GTpZ1s', // Токен бота от @BotFather
-    chatId: '8368222584', // Твой Chat ID от @userinfobot
+    chatId: '5623324059', // Твой Chat ID от @userinfobot
     apiUrl: 'https://api.telegram.org/bot'
 };
 
@@ -167,21 +167,21 @@ function isValidEmail(email) {
     return emailRegex.test(email);
 }
 
-// Отправка в Telegram
+// Отправка в Telegram (исправленная версия)
 async function sendToTelegram(data) {
     const message = `
-📨 *Новое сообщение с сайта*
+📨 НОВОЕ СООБЩЕНИЕ С САЙТА
 
-👤 *Имя:* ${escapeMarkdown(data.name)}
-📧 *Email:* ${escapeMarkdown(data.email)}
-📝 *Тема:* ${escapeMarkdown(data.subject)}
+👤 Имя: ${data.name}
+📧 Email: ${data.email}
+📝 Тема: ${data.subject}
 
-💬 *Сообщение:*
-${escapeMarkdown(data.message)}
+💬 Сообщение:
+${data.message}
 
-⏰ *Время:* ${data.timestamp}
-🌐 *IP:* ${data.ip}
-🔗 *Отправлено с:* razetka2010\\.github\\.io
+⏰ Время: ${data.timestamp}
+🌐 IP: ${data.ip}
+🔗 Отправлено с: razetka2010.github.io
     `.trim();
     
     const url = `${TELEGRAM_CONFIG.apiUrl}${TELEGRAM_CONFIG.botToken}/sendMessage`;
@@ -195,14 +195,19 @@ ${escapeMarkdown(data.message)}
             body: JSON.stringify({
                 chat_id: TELEGRAM_CONFIG.chatId,
                 text: message,
-                parse_mode: 'MarkdownV2',
                 disable_web_page_preview: true
             })
         });
         
         const result = await response.json();
         console.log('Telegram response:', result);
-        return result.ok;
+        
+        if (!result.ok) {
+            console.error('Telegram error:', result.description);
+            return false;
+        }
+        
+        return true;
         
     } catch (error) {
         console.error('Telegram API error:', error);
@@ -210,27 +215,30 @@ ${escapeMarkdown(data.message)}
     }
 }
 
-// Экранирование для MarkdownV2
+// Экранирование для MarkdownV2 (исправленная версия)
 function escapeMarkdown(text) {
+    if (!text) return '';
+    
     return text.toString()
-        .replace(/_/g, '\\_')
+        .replace(/\_/g, '\\_')
         .replace(/\*/g, '\\*')
         .replace(/\[/g, '\\[')
         .replace(/\]/g, '\\]')
         .replace(/\(/g, '\\(')
         .replace(/\)/g, '\\)')
-        .replace(/~/g, '\\~')
-        .replace(/`/g, '\\`')
-        .replace(/>/g, '\\>')
-        .replace(/#/g, '\\#')
+        .replace(/\~/g, '\\~')
+        .replace(/\`/g, '\\`')
+        .replace(/\>/g, '\\>')
+        .replace(/\#/g, '\\#')
         .replace(/\+/g, '\\+')
-        .replace(/-/g, '\\-')
-        .replace(/=/g, '\\=')
+        .replace(/\-/g, '\\-')
+        .replace(/\=/g, '\\=')
         .replace(/\|/g, '\\|')
         .replace(/\{/g, '\\{')
         .replace(/\}/g, '\\}')
         .replace(/\./g, '\\.')
-        .replace(/!/g, '\\!');
+        .replace(/\!/g, '\\!')
+        .replace(/\-/g, '\\-');
 }
 
 // Управление статусом формы
