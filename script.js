@@ -9,6 +9,10 @@ const TELEGRAM_CONFIG = {
 let lastSubmissionTime = 0;
 let isSubmitting = false;
 
+// Определяем тип устройства
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+const isTablet = /iPad|Android|Tablet/i.test(navigator.userAgent);
+
 // Основная инициализация
 document.addEventListener('DOMContentLoaded', function() {
     initApp();
@@ -18,18 +22,28 @@ function initApp() {
     setCurrentYear();
     initFormHandler();
     initSmoothScroll();
-    initScrollAnimations();
-    initHoverEffects();
     initCharCounter();
     initMobileMenu();
     initPageLoader();
+    
+    // Инициализируем анимации только для ПК
+    if (!isMobile && !isTablet) {
+        initDesktopAnimations();
+    }
+}
+
+// Инициализация анимаций для ПК
+function initDesktopAnimations() {
+    initScrollAnimations();
+    initHoverEffects();
     createParticles();
     initBackToTop();
     initPhilosophyOrb();
     initInteractiveElements();
+    initParallaxEffect();
 }
 
-// Создание частиц
+// Создание частиц для ПК
 function createParticles() {
     const container = document.getElementById('particles');
     if (!container) return;
@@ -52,7 +66,7 @@ function getRandomColor() {
     return colors[Math.floor(Math.random() * colors.length)];
 }
 
-// Интерактивная философская сфера
+// Интерактивная философская сфера для ПК
 function initPhilosophyOrb() {
     const orb = document.getElementById('philosophyOrb');
     if (!orb) return;
@@ -113,25 +127,27 @@ function initPhilosophyOrb() {
 }
 
 // Добавляем стили для всплывающего текста
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes floatUp {
-        0% {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
+if (!isMobile && !isTablet) {
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-50px);
+            }
         }
-        100% {
-            opacity: 0;
-            transform: translateX(-50%) translateY(-50px);
-        }
-    }
-`;
-document.head.appendChild(style);
+    `;
+    document.head.appendChild(style);
+}
 
-// Инициализация интерактивных элементов
+// Инициализация интерактивных элементов для ПК
 function initInteractiveElements() {
     // Анимация тегов при клике
-    const tags = document.querySelectorAll('.tag');
+    const tags = document.querySelectorAll('.desktop-hover.tag');
     tags.forEach(tag => {
         tag.addEventListener('click', function() {
             this.style.transform = 'scale(0.9)';
@@ -140,8 +156,10 @@ function initInteractiveElements() {
             }, 150);
         });
     });
+}
 
-    // Параллакс эффект для фона
+// Параллакс эффект для ПК
+function initParallaxEffect() {
     window.addEventListener('mousemove', function(e) {
         const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
         const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
@@ -154,7 +172,7 @@ function initInteractiveElements() {
     });
 }
 
-// Кнопка "Наверх"
+// Кнопка "Наверх" для ПК
 function initBackToTop() {
     const backToTop = document.getElementById('backToTop');
     if (!backToTop) return;
@@ -222,22 +240,24 @@ function initMobileMenu() {
 function initPageLoader() {
     window.addEventListener('load', function() {
         document.body.style.opacity = '0';
-        document.body.style.transition = 'opacity 0.5s ease';
+        document.body.style.transition = 'opacity 0.3s ease';
         
         setTimeout(() => {
             document.body.style.opacity = '1';
         }, 100);
 
-        // Запускаем анимации после загрузки
-        setTimeout(() => {
-            const elements = document.querySelectorAll('.fade-in, .slide-in');
-            elements.forEach((el, index) => {
-                setTimeout(() => {
-                    el.style.opacity = '1';
-                    el.style.transform = 'translate(0)';
-                }, index * 200);
-            });
-        }, 500);
+        // Запускаем анимации после загрузки только для ПК
+        if (!isMobile && !isTablet) {
+            setTimeout(() => {
+                const elements = document.querySelectorAll('.fade-in, .slide-in');
+                elements.forEach((el, index) => {
+                    setTimeout(() => {
+                        el.style.opacity = '1';
+                        el.style.transform = 'translate(0)';
+                    }, index * 200);
+                });
+            }, 500);
+        }
     });
 }
 
@@ -312,7 +332,6 @@ function initFormHandler() {
         showFormStatus('sending', '📨 Отправка сообщения...', statusElement);
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
         submitBtn.disabled = true;
-        submitBtn.classList.add('sending-animation');
         
         try {
             // Отправляем в Telegram
@@ -332,7 +351,6 @@ function initFormHandler() {
                     submitBtn.innerHTML = originalText;
                     submitBtn.disabled = false;
                     submitBtn.style.background = '';
-                    submitBtn.classList.remove('sending-animation');
                     hideFormStatus(statusElement);
                     
                     // Сбрасываем счетчик символов
@@ -353,7 +371,6 @@ function initFormHandler() {
             showFormStatus('error', '❌ Ошибка отправки. Пожалуйста, попробуйте еще раз или напишите мне напрямую в Telegram.', statusElement);
             submitBtn.innerHTML = originalText;
             submitBtn.disabled = false;
-            submitBtn.classList.remove('sending-animation');
             submitBtn.style.background = '';
             
             // Показываем уведомление об ошибке
@@ -450,7 +467,6 @@ ${data.message}
         });
         
         const result = await response.json();
-        console.log('Telegram response:', result);
         
         if (result.ok) {
             return true;
@@ -517,7 +533,7 @@ function initSmoothScroll() {
     });
 }
 
-// Анимации при скролле
+// Анимации при скролле для ПК
 function initScrollAnimations() {
     const observerOptions = {
         threshold: 0.1,
@@ -551,20 +567,16 @@ function initScrollAnimations() {
     });
 }
 
-// Эффекты при наведении
+// Эффекты при наведении для ПК
 function initHoverEffects() {
     const cards = document.querySelectorAll('.philosophy-card, .stat-card');
     cards.forEach(card => {
         card.addEventListener('mouseenter', function() {
-            if (window.innerWidth > 768) {
-                this.style.transform = 'translateY(-5px)';
-            }
+            this.style.transform = 'translateY(-5px)';
         });
         
         card.addEventListener('mouseleave', function() {
-            if (window.innerWidth > 768) {
-                this.style.transform = 'translateY(0)';
-            }
+            this.style.transform = 'translateY(0)';
         });
     });
 }
@@ -642,80 +654,7 @@ function scrollToSection(sectionId) {
     }
 }
 
-// Обработка ошибок сети
-function initNetworkHandlers() {
-    window.addEventListener('online', function() {
-        showNotification('Соединение восстановлено', 'success');
-    });
-
-    window.addEventListener('offline', function() {
-        showNotification('Отсутствует интернет-соединение', 'error');
-    });
-}
-
-// Оптимизация для мобильных устройств
-function initMobileOptimizations() {
-    // Предотвращение масштабирования при фокусе на input
-    document.addEventListener('focusin', function(e) {
-        if (window.innerWidth <= 768 && (e.target.matches('input') || e.target.matches('textarea'))) {
-            setTimeout(() => {
-                e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 300);
-        }
-    });
-    
-    // Улучшение производительности на мобильных
-    if ('connection' in navigator) {
-        const connection = navigator.connection;
-        if (connection.saveData) {
-            // Отключаем некоторые анимации при экономии трафика
-            document.body.classList.add('save-data');
-        }
-    }
-}
-
-// Инициализация дополнительных оптимизаций
-initNetworkHandlers();
-initMobileOptimizations();
-
-// Обработка изменения ориентации
-window.addEventListener('orientationchange', function() {
-    setTimeout(() => {
-        // Обновляем высоту герой секции при изменении ориентации
-        const hero = document.getElementById('hero');
-        if (hero) {
-            hero.style.minHeight = '100vh';
-        }
-    }, 300);
-});
-
-// Предотвращение контекстного меню на изображениях
-document.addEventListener('contextmenu', function(e) {
-    if (e.target.tagName === 'IMG') {
-        e.preventDefault();
-    }
-});
-
-// Логирование ошибок
-window.addEventListener('error', function(e) {
-    console.error('Global error:', e.error);
-});
-
-// Инициализация при полной загрузке страницы
-window.addEventListener('load', function() {
-    console.log('🚀 Сайт Razetka полностью загружен и готов к работе!');
-    
-    // Проверяем поддержку Service Worker для будущего использования
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/sw.js').then(function(registration) {
-            console.log('ServiceWorker зарегистрирован:', registration);
-        }).catch(function(error) {
-            console.log('ServiceWorker не зарегистрирован:', error);
-        });
-    }
-});
-
-// Улучшенный ресайз хендлер
+// Упрощенный ресайз хендлер
 let resizeTimeout;
 window.addEventListener('resize', function() {
     clearTimeout(resizeTimeout);
@@ -729,3 +668,6 @@ window.addEventListener('resize', function() {
         }
     }, 250);
 });
+
+// Логируем тип устройства для отладки
+console.log(`🚀 Устройство: ${isMobile ? 'Мобильное' : isTablet ? 'Планшет' : 'ПК'}`);
