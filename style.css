@@ -38,6 +38,27 @@ body {
     z-index: -1;
 }
 
+/* Движущаяся сетка */
+.moving-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        linear-gradient(90deg, var(--darker) 21px, transparent 1%) center,
+        linear-gradient(var(--darker) 21px, transparent 1%) center,
+        var(--glass);
+    background-size: 22px 22px;
+    animation: gridMove 20s linear infinite;
+    opacity: 0.3;
+}
+
+@keyframes gridMove {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(22px, 22px); }
+}
+
 .floating-shapes {
     position: absolute;
     width: 100%;
@@ -78,10 +99,91 @@ body {
     animation-delay: -14s;
 }
 
+/* Морфинг формы */
+.morphing-shape {
+    position: absolute;
+    opacity: 0.05;
+    z-index: -1;
+    animation: morph 8s ease-in-out infinite;
+}
+
+.morph-1 {
+    width: 300px;
+    height: 300px;
+    top: 10%;
+    right: 10%;
+    background: var(--secondary);
+    animation-delay: 0s;
+}
+
+.morph-2 {
+    width: 200px;
+    height: 200px;
+    bottom: 20%;
+    left: 10%;
+    background: var(--neon);
+    animation-delay: -4s;
+}
+
+@keyframes morph {
+    0%, 100% { 
+        border-radius: 50%;
+        transform: rotate(0deg) scale(1);
+    }
+    25% { 
+        border-radius: 40% 60% 70% 30% / 40% 40% 60% 50%;
+        transform: rotate(90deg) scale(1.1);
+    }
+    50% { 
+        border-radius: 70% 30% 50% 50% / 30% 70% 30% 70%;
+        transform: rotate(180deg) scale(0.9);
+    }
+    75% { 
+        border-radius: 40% 60% 70% 30% / 40% 40% 60% 50%;
+        transform: rotate(270deg) scale(1.05);
+    }
+}
+
 @keyframes float {
     0%, 100% { transform: translate(0, 0) rotate(0deg); }
     33% { transform: translate(30px, 50px) rotate(120deg); }
     66% { transform: translate(-20px, 30px) rotate(240deg); }
+}
+
+/* Эффект частиц */
+.particles-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--secondary);
+    border-radius: 50%;
+    animation: floatParticle 15s infinite linear;
+}
+
+@keyframes floatParticle {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+    }
 }
 
 /* Анимации появления */
@@ -133,6 +235,47 @@ body {
     }
 }
 
+/* Эффект печатающего текста */
+.typewriter {
+    overflow: hidden;
+    border-right: 3px solid var(--secondary);
+    white-space: nowrap;
+    animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: var(--secondary) }
+}
+
+/* Неоновый текст */
+.neon-text {
+    text-shadow: 
+        0 0 5px currentColor,
+        0 0 10px currentColor,
+        0 0 20px currentColor;
+    animation: neonPulse 2s infinite alternate;
+}
+
+@keyframes neonPulse {
+    from {
+        text-shadow: 
+            0 0 5px currentColor,
+            0 0 10px currentColor;
+    }
+    to {
+        text-shadow: 
+            0 0 10px currentColor,
+            0 0 20px currentColor,
+            0 0 30px currentColor;
+    }
+}
+
 /* Навигация */
 .simple-nav {
     position: fixed;
@@ -170,13 +313,20 @@ body {
 .nav-link {
     color: #fff;
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
     position: relative;
     font-size: 0.95rem;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
 }
 
 .nav-link:hover {
     color: var(--secondary);
+    background: rgba(72, 219, 251, 0.1);
+}
+
+.hover-glow:hover {
+    box-shadow: 0 0 15px var(--secondary);
 }
 
 .nav-link::after {
@@ -201,6 +351,12 @@ body {
     color: #fff;
     cursor: pointer;
     padding: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-btn:hover {
+    color: var(--secondary);
+    transform: scale(1.1);
 }
 
 .mobile-menu {
@@ -241,6 +397,7 @@ body {
 .mobile-nav-link:hover {
     background: var(--glass);
     color: var(--secondary);
+    transform: translateX(10px);
 }
 
 /* Герой секция */
@@ -256,6 +413,7 @@ body {
     text-align: center;
     max-width: 800px;
     width: 100%;
+    position: relative;
 }
 
 .title-underline {
@@ -284,6 +442,46 @@ body {
     50% { opacity: 0.5; }
 }
 
+/* Плавающие элементы */
+.floating-elements {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.floating-element {
+    position: absolute;
+    font-size: 2rem;
+    opacity: 0.3;
+    animation: floatElement 10s infinite ease-in-out;
+}
+
+.element-1 {
+    top: 20%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.element-2 {
+    top: 60%;
+    right: 15%;
+    animation-delay: -3s;
+}
+
+.element-3 {
+    bottom: 30%;
+    left: 20%;
+    animation-delay: -6s;
+}
+
+@keyframes floatElement {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(180deg); }
+}
+
 /* Упрощенные стеклянные карточки */
 .simple-glass {
     background: var(--glass);
@@ -293,6 +491,40 @@ body {
     padding: clamp(1.5rem, 4vw, 2rem);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
+}
+
+/* 3D эффекты карточек */
+.card-3d {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+.card-3d:hover {
+    transform: rotateY(5deg) rotateX(5deg) translateZ(10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Интерактивные карточки */
+.interactive-card {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.interactive-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transition: left 0.5s;
+}
+
+.interactive-card:hover::before {
+    left: 100%;
 }
 
 /* Эффект подъема при наведении */
@@ -336,6 +568,10 @@ body {
     border-radius: 8px;
     overflow: hidden;
     min-width: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
 }
 
 .pulse-btn .btn-glow {
@@ -355,6 +591,21 @@ body {
 .pulse-btn:hover {
     background: var(--secondary);
     color: var(--dark);
+    transform: translateY(-2px);
+}
+
+.neon-btn {
+    box-shadow: 0 0 10px var(--secondary);
+    animation: buttonGlow 2s infinite alternate;
+}
+
+@keyframes buttonGlow {
+    from {
+        box-shadow: 0 0 10px var(--secondary);
+    }
+    to {
+        box-shadow: 0 0 20px var(--secondary), 0 0 30px var(--secondary);
+    }
 }
 
 .pulse-btn.secondary {
@@ -365,6 +616,28 @@ body {
 .pulse-btn.secondary:hover {
     background: var(--neon);
     color: var(--dark);
+}
+
+.pulse-btn.secondary.neon-btn {
+    box-shadow: 0 0 10px var(--neon);
+    animation: buttonGlowSecondary 2s infinite alternate;
+}
+
+@keyframes buttonGlowSecondary {
+    from {
+        box-shadow: 0 0 10px var(--neon);
+    }
+    to {
+        box-shadow: 0 0 20px var(--neon), 0 0 30px var(--neon);
+    }
+}
+
+.btn-icon {
+    transition: transform 0.3s ease;
+}
+
+.pulse-btn:hover .btn-icon {
+    transform: translateX(3px);
 }
 
 .hero-actions {
@@ -429,6 +702,18 @@ section {
     animation: avatarPulse 4s ease-in-out infinite;
 }
 
+.animated-gradient {
+    background: linear-gradient(-45deg, #ff6b6b, #48dbfb, #feca57, #ff9ff3);
+    background-size: 400% 400%;
+    animation: gradientShift 8s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50% }
+    50% { background-position: 100% 50% }
+    100% { background-position: 0% 50% }
+}
+
 @keyframes avatarPulse {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.05); }
@@ -474,6 +759,7 @@ section {
     border-radius: 20px;
     font-size: clamp(0.8rem, 2.5vw, 0.9rem);
     transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .tag:hover {
@@ -500,6 +786,20 @@ section {
     border-radius: 50%;
     animation: statusPulse 2s infinite;
     flex-shrink: 0;
+}
+
+.neon-glow {
+    box-shadow: 0 0 10px var(--secondary);
+    animation: neonPulseBox 2s infinite alternate;
+}
+
+@keyframes neonPulseBox {
+    from {
+        box-shadow: 0 0 5px var(--secondary);
+    }
+    to {
+        box-shadow: 0 0 15px var(--secondary), 0 0 25px var(--secondary);
+    }
 }
 
 @keyframes statusPulse {
@@ -546,6 +846,8 @@ section {
 
 .philosophy-card {
     text-align: center;
+    position: relative;
+    overflow: hidden;
 }
 
 .card-icon {
@@ -561,6 +863,80 @@ section {
 
 .philosophy-card p {
     font-size: clamp(0.9rem, 2.5vw, 1rem);
+}
+
+.card-sparkle {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: var(--accent);
+    border-radius: 50%;
+    opacity: 0;
+    animation: sparkle 3s infinite;
+}
+
+.philosophy-card:hover .card-sparkle {
+    opacity: 1;
+}
+
+.card-sparkle:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+.card-sparkle:nth-child(2) { top: 10%; right: 10%; animation-delay: 1s; }
+.card-sparkle:nth-child(3) { bottom: 10%; left: 10%; animation-delay: 2s; }
+
+@keyframes sparkle {
+    0%, 100% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1); opacity: 1; }
+}
+
+/* Интерактивная философская сфера */
+.interactive-philosophy {
+    text-align: center;
+    margin-top: 4rem;
+}
+
+.philosophy-orb {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 2rem;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.orb-core {
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, var(--secondary), transparent);
+    border-radius: 50%;
+    animation: orbRotate 10s linear infinite;
+}
+
+.orb-glow {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: var(--secondary);
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: orbPulse 2s ease-in-out infinite alternate;
+    filter: blur(10px);
+}
+
+@keyframes orbRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes orbPulse {
+    from { transform: scale(1); opacity: 0.2; }
+    to { transform: scale(1.1); opacity: 0.4; }
+}
+
+.orb-text {
+    color: var(--accent);
+    font-style: italic;
 }
 
 /* Контакты */
@@ -585,11 +961,12 @@ section {
     padding: 1rem;
     background: rgba(255, 255, 255, 0.05);
     border-radius: 8px;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .contact-item:hover {
     transform: translateX(10px);
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .contact-item i {
@@ -652,6 +1029,10 @@ section {
     font-size: 1rem;
     transition: all 0.3s ease;
     font-size: clamp(0.9rem, 3vw, 1rem);
+}
+
+.input-glow:focus {
+    box-shadow: 0 0 10px var(--secondary);
 }
 
 .form-group textarea {
@@ -772,6 +1153,37 @@ section {
     animation: sendPulse 1s infinite;
 }
 
+/* Кнопка возврата наверх */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: var(--secondary);
+    color: var(--dark);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(72, 219, 251, 0.3);
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-to-top:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 25px rgba(72, 219, 251, 0.5);
+}
+
 /* Подвал */
 .simple-footer {
     background: rgba(10, 10, 10, 0.9);
@@ -846,6 +1258,13 @@ section {
     
     .avatar {
         margin-right: 0;
+    }
+    
+    .back-to-top {
+        bottom: 20px;
+        right: 20px;
+        width: 40px;
+        height: 40px;
     }
 }
 
@@ -924,6 +1343,10 @@ section {
     }
     
     .submit-btn:hover {
+        transform: none;
+    }
+    
+    .card-3d:hover {
         transform: none;
     }
 }
