@@ -25,7 +25,44 @@ body {
     font-size: 16px;
 }
 
-/* Анимированный фон */
+/* Классы для разделения ПК и мобильных */
+.desktop-only {
+    display: block;
+}
+
+.mobile-only {
+    display: none;
+}
+
+.desktop-neon {
+    /* Неоновые эффекты для ПК */
+}
+
+.mobile-simple {
+    /* Простые стили для мобильных */
+}
+
+.desktop-interactive {
+    /* Интерактивные элементы для ПК */
+}
+
+.desktop-hover {
+    /* Hover-эффекты для ПК */
+}
+
+.desktop-animated {
+    /* Анимированные элементы для ПК */
+}
+
+.desktop-pulse {
+    /* Пульсирующие анимации для ПК */
+}
+
+.desktop-glow {
+    /* Свечение для ПК */
+}
+
+/* Анимированный фон для ПК */
 .animated-bg {
     position: fixed;
     top: 0;
@@ -38,7 +75,7 @@ body {
     z-index: -1;
 }
 
-/* Движущаяся сетка */
+/* Движущаяся сетка для ПК */
 .moving-grid {
     position: absolute;
     top: 0;
@@ -99,7 +136,7 @@ body {
     animation-delay: -14s;
 }
 
-/* Морфинг формы */
+/* Морфинг формы для ПК */
 .morphing-shape {
     position: absolute;
     opacity: 0.05;
@@ -150,7 +187,7 @@ body {
     66% { transform: translate(-20px, 30px) rotate(240deg); }
 }
 
-/* Эффект частиц */
+/* Эффект частиц для ПК */
 .particles-container {
     position: absolute;
     top: 0;
@@ -186,7 +223,21 @@ body {
     }
 }
 
-/* Анимации появления */
+/* Простой фон для мобильных */
+.simple-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(255, 107, 107, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(72, 219, 251, 0.05) 0%, transparent 50%),
+        var(--darker);
+    z-index: -1;
+}
+
+/* Анимации появления для ПК */
 .fade-in {
     opacity: 0;
     transform: translateY(30px);
@@ -213,7 +264,7 @@ body {
     }
 }
 
-/* Анимация заголовка */
+/* Анимация заголовка для ПК */
 .animated-title {
     font-size: clamp(2.5rem, 8vw, 4rem);
     font-weight: 900;
@@ -235,7 +286,19 @@ body {
     }
 }
 
-/* Эффект печатающего текста */
+/* Простой заголовок для мобильных */
+.simple-title {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-weight: 900;
+    text-transform: uppercase;
+    background: linear-gradient(45deg, var(--primary), var(--secondary), var(--neon));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+/* Эффект печатающего текста для ПК */
 .typewriter {
     overflow: hidden;
     border-right: 3px solid var(--secondary);
@@ -253,8 +316,8 @@ body {
     50% { border-color: var(--secondary) }
 }
 
-/* Неоновый текст */
-.neon-text {
+/* Неоновый текст для ПК */
+.desktop-neon {
     text-shadow: 
         0 0 5px currentColor,
         0 0 10px currentColor,
@@ -320,13 +383,16 @@ body {
     border-radius: 5px;
 }
 
-.nav-link:hover {
-    color: var(--secondary);
-    background: rgba(72, 219, 251, 0.1);
-}
-
-.hover-glow:hover {
-    box-shadow: 0 0 15px var(--secondary);
+/* Hover-эффекты только для ПК */
+@media (hover: hover) and (pointer: fine) {
+    .desktop-hover:hover {
+        color: var(--secondary);
+        background: rgba(72, 219, 251, 0.1);
+    }
+    
+    .desktop-hover:hover::after {
+        width: 100%;
+    }
 }
 
 .nav-link::after {
@@ -340,10 +406,6 @@ body {
     transition: width 0.3s ease;
 }
 
-.nav-link:hover::after {
-    width: 100%;
-}
-
 /* Мобильное меню */
 .mobile-menu-btn {
     display: none;
@@ -351,12 +413,6 @@ body {
     color: #fff;
     cursor: pointer;
     padding: 0.5rem;
-    transition: all 0.3s ease;
-}
-
-.mobile-menu-btn:hover {
-    color: var(--secondary);
-    transform: scale(1.1);
 }
 
 .mobile-menu {
@@ -397,7 +453,6 @@ body {
 .mobile-nav-link:hover {
     background: var(--glass);
     color: var(--secondary);
-    transform: translateX(10px);
 }
 
 /* Герой секция */
@@ -434,15 +489,9 @@ body {
     height: 5px;
     background: var(--secondary);
     border-radius: 2px;
-    animation: pulse 2s infinite;
 }
 
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
-}
-
-/* Плавающие элементы */
+/* Плавающие элементы для ПК */
 .floating-elements {
     position: absolute;
     width: 100%;
@@ -493,26 +542,28 @@ body {
     transition: all 0.3s ease;
 }
 
-/* 3D эффекты карточек */
+/* 3D эффекты карточек для ПК */
 .card-3d {
     transform-style: preserve-3d;
     perspective: 1000px;
     transition: transform 0.5s ease, box-shadow 0.5s ease;
 }
 
-.card-3d:hover {
-    transform: rotateY(5deg) rotateX(5deg) translateZ(10px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+@media (hover: hover) and (pointer: fine) {
+    .card-3d:hover {
+        transform: rotateY(5deg) rotateX(5deg) translateZ(10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
 }
 
-/* Интерактивные карточки */
-.interactive-card {
+/* Интерактивные карточки для ПК */
+.desktop-interactive {
     position: relative;
     overflow: hidden;
     cursor: pointer;
 }
 
-.interactive-card::before {
+.desktop-interactive::before {
     content: '';
     position: absolute;
     top: 0;
@@ -523,14 +574,18 @@ body {
     transition: left 0.5s;
 }
 
-.interactive-card:hover::before {
-    left: 100%;
+@media (hover: hover) and (pointer: fine) {
+    .desktop-interactive:hover::before {
+        left: 100%;
+    }
 }
 
-/* Эффект подъема при наведении */
-.hover-lift:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+/* Эффект подъема при наведении для ПК */
+@media (hover: hover) and (pointer: fine) {
+    .desktop-interactive:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    }
 }
 
 .quote-card {
@@ -554,7 +609,7 @@ body {
     font-size: 0.9rem;
 }
 
-/* Анимированные кнопки */
+/* Анимированные кнопки для ПК */
 .pulse-btn {
     position: relative;
     background: transparent;
@@ -584,14 +639,16 @@ body {
     transition: left 0.5s ease;
 }
 
-.pulse-btn:hover .btn-glow {
-    left: 100%;
-}
-
-.pulse-btn:hover {
-    background: var(--secondary);
-    color: var(--dark);
-    transform: translateY(-2px);
+@media (hover: hover) and (pointer: fine) {
+    .pulse-btn:hover .btn-glow {
+        left: 100%;
+    }
+    
+    .pulse-btn:hover {
+        background: var(--secondary);
+        color: var(--dark);
+        transform: translateY(-2px);
+    }
 }
 
 .neon-btn {
@@ -613,9 +670,11 @@ body {
     color: var(--neon);
 }
 
-.pulse-btn.secondary:hover {
-    background: var(--neon);
-    color: var(--dark);
+@media (hover: hover) and (pointer: fine) {
+    .pulse-btn.secondary:hover {
+        background: var(--neon);
+        color: var(--dark);
+    }
 }
 
 .pulse-btn.secondary.neon-btn {
@@ -636,8 +695,29 @@ body {
     transition: transform 0.3s ease;
 }
 
-.pulse-btn:hover .btn-icon {
-    transform: translateX(3px);
+@media (hover: hover) and (pointer: fine) {
+    .pulse-btn:hover .btn-icon {
+        transform: translateX(3px);
+    }
+}
+
+/* Упрощенные кнопки для мобильных */
+.simple-btn {
+    background: transparent;
+    border: 2px solid var(--secondary);
+    color: var(--secondary);
+    padding: clamp(0.8rem, 3vw, 1rem) clamp(1.5rem, 4vw, 2rem);
+    margin: 0 0.5rem;
+    font-size: clamp(0.9rem, 3vw, 1.1rem);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    min-width: 140px;
+}
+
+.simple-btn.secondary {
+    border-color: var(--neon);
+    color: var(--neon);
 }
 
 .hero-actions {
@@ -699,19 +779,10 @@ section {
     justify-content: center;
     font-size: clamp(1.5rem, 4vw, 2rem);
     font-weight: bold;
+}
+
+.desktop-animated {
     animation: avatarPulse 4s ease-in-out infinite;
-}
-
-.animated-gradient {
-    background: linear-gradient(-45deg, #ff6b6b, #48dbfb, #feca57, #ff9ff3);
-    background-size: 400% 400%;
-    animation: gradientShift 8s ease infinite;
-}
-
-@keyframes gradientShift {
-    0% { background-position: 0% 50% }
-    50% { background-position: 100% 50% }
-    100% { background-position: 0% 50% }
 }
 
 @keyframes avatarPulse {
@@ -759,13 +830,14 @@ section {
     border-radius: 20px;
     font-size: clamp(0.8rem, 2.5vw, 0.9rem);
     transition: all 0.3s ease;
-    cursor: pointer;
 }
 
-.tag:hover {
-    background: var(--secondary);
-    color: var(--dark);
-    transform: translateY(-2px);
+@media (hover: hover) and (pointer: fine) {
+    .desktop-hover:hover {
+        background: var(--secondary);
+        color: var(--dark);
+        transform: translateY(-2px);
+    }
 }
 
 .status {
@@ -784,11 +856,10 @@ section {
     height: 12px;
     background: var(--secondary);
     border-radius: 50%;
-    animation: statusPulse 2s infinite;
     flex-shrink: 0;
 }
 
-.neon-glow {
+.desktop-neon.status-indicator {
     box-shadow: 0 0 10px var(--secondary);
     animation: neonPulseBox 2s infinite alternate;
 }
@@ -800,11 +871,6 @@ section {
     to {
         box-shadow: 0 0 15px var(--secondary), 0 0 25px var(--secondary);
     }
-}
-
-@keyframes statusPulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
 }
 
 /* Статистика */
@@ -875,8 +941,10 @@ section {
     animation: sparkle 3s infinite;
 }
 
-.philosophy-card:hover .card-sparkle {
-    opacity: 1;
+@media (hover: hover) and (pointer: fine) {
+    .philosophy-card:hover .card-sparkle {
+        opacity: 1;
+    }
 }
 
 .card-sparkle:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
@@ -888,7 +956,7 @@ section {
     50% { transform: scale(1); opacity: 1; }
 }
 
-/* Интерактивная философская сфера */
+/* Интерактивная философская сфера для ПК */
 .interactive-philosophy {
     text-align: center;
     margin-top: 4rem;
@@ -964,9 +1032,11 @@ section {
     transition: all 0.3s ease;
 }
 
-.contact-item:hover {
-    transform: translateX(10px);
-    background: rgba(255, 255, 255, 0.1);
+@media (hover: hover) and (pointer: fine) {
+    .desktop-interactive:hover {
+        transform: translateX(10px);
+        background: rgba(255, 255, 255, 0.1);
+    }
 }
 
 .contact-item i {
@@ -977,8 +1047,13 @@ section {
     flex-shrink: 0;
 }
 
-.pulse-icon {
+.desktop-pulse {
     animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
 }
 
 .social-links {
@@ -1008,8 +1083,10 @@ section {
     background: linear-gradient(45deg, #333, #6e5494);
 }
 
-.social-btn:hover {
-    transform: translateY(-2px);
+@media (hover: hover) and (pointer: fine) {
+    .desktop-hover:hover {
+        transform: translateY(-2px);
+    }
 }
 
 /* Форма */
@@ -1031,7 +1108,7 @@ section {
     font-size: clamp(0.9rem, 3vw, 1rem);
 }
 
-.input-glow:focus {
+.desktop-glow:focus {
     box-shadow: 0 0 10px var(--secondary);
 }
 
@@ -1089,8 +1166,10 @@ section {
     gap: 0.5rem;
 }
 
-.submit-btn:hover {
-    transform: translateY(-2px);
+@media (hover: hover) and (pointer: fine) {
+    .desktop-hover:hover {
+        transform: translateY(-2px);
+    }
 }
 
 /* Стили для статуса формы */
@@ -1142,18 +1221,7 @@ section {
     color: #e74c3c;
 }
 
-/* Анимация отправки */
-@keyframes sendPulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
-
-.sending-animation {
-    animation: sendPulse 1s infinite;
-}
-
-/* Кнопка возврата наверх */
+/* Кнопка возврата наверх для ПК */
 .back-to-top {
     position: fixed;
     bottom: 30px;
@@ -1179,9 +1247,11 @@ section {
     visibility: visible;
 }
 
-.back-to-top:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 25px rgba(72, 219, 251, 0.5);
+@media (hover: hover) and (pointer: fine) {
+    .back-to-top:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 25px rgba(72, 219, 251, 0.5);
+    }
 }
 
 /* Подвал */
@@ -1206,20 +1276,16 @@ section {
     font-size: clamp(0.8rem, 2.5vw, 0.9rem);
 }
 
-/* Адаптивность */
-@media (max-width: 968px) {
-    .about-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
+/* Адаптивность для мобильных */
+@media (max-width: 768px) {
+    .desktop-only {
+        display: none !important;
     }
     
-    .stats-grid {
-        flex-direction: row;
-        justify-content: space-between;
+    .mobile-only {
+        display: block !important;
     }
-}
-
-@media (max-width: 768px) {
+    
     .nav-links {
         display: none;
     }
@@ -1238,7 +1304,7 @@ section {
         align-items: center;
     }
     
-    .pulse-btn {
+    .simple-btn, .pulse-btn {
         margin: 0;
         width: min(250px, 80vw);
     }
@@ -1249,6 +1315,11 @@ section {
     
     .stats-grid {
         flex-direction: column;
+    }
+    
+    .about-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
     }
     
     .about-header {
@@ -1265,6 +1336,27 @@ section {
         right: 20px;
         width: 40px;
         height: 40px;
+    }
+    
+    /* Отключаем сложные анимации на мобильных */
+    .fade-in, .slide-in {
+        opacity: 1;
+        transform: none;
+        animation: none;
+    }
+    
+    .simple-glass {
+        transition: none;
+    }
+}
+
+@media (min-width: 769px) {
+    .mobile-only {
+        display: none !important;
+    }
+    
+    .desktop-only {
+        display: block !important;
     }
 }
 
@@ -1296,65 +1388,13 @@ section {
     }
 }
 
-/* Ориентация телефона */
-@media (max-height: 600px) and (orientation: landscape) {
-    #hero {
-        min-height: 120vh;
-        padding-top: 100px;
-    }
-    
-    .hero-actions {
-        margin: 2rem 0;
-    }
-    
-    .quote-card {
-        margin-bottom: 2rem;
-    }
-}
-
-/* Высокие экраны */
-@media (min-width: 1200px) and (min-height: 800px) {
-    #hero {
-        min-height: 100vh;
-    }
-    
-    .hero-container {
-        padding: 2rem 0;
-    }
-}
-
-/* Поддержка касаний */
-@media (hover: none) {
-    .hover-lift:hover {
-        transform: none;
-    }
-    
-    .contact-item:hover {
-        transform: none;
-    }
-    
-    .tag:hover {
-        transform: none;
-        background: rgba(255, 255, 255, 0.1);
-    }
-    
-    .social-btn:hover {
-        transform: none;
-    }
-    
-    .submit-btn:hover {
-        transform: none;
-    }
-    
-    .card-3d:hover {
-        transform: none;
-    }
-}
-
-/* Улучшенная поддержка мобильных браузеров */
-@supports (-webkit-touch-callout: none) {
+/* Отключаем backdrop-filter для Safari */
+@supports not (backdrop-filter: blur(10px)) {
     .simple-glass {
-        backdrop-filter: none;
         background: rgba(15, 15, 15, 0.95);
+    }
+    
+    .mobile-menu {
+        background: rgba(10, 10, 10, 0.98);
     }
 }
