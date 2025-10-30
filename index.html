@@ -8,8 +8,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <!-- Анимированный фон -->
-    <div class="animated-bg">
+    <!-- Анимированный фон для ПК -->
+    <div class="animated-bg desktop-only">
         <div class="moving-grid"></div>
         <div class="floating-shapes">
             <div class="shape shape-1"></div>
@@ -21,15 +21,18 @@
         <div class="particles-container" id="particles"></div>
     </div>
 
+    <!-- Простой фон для мобильных -->
+    <div class="simple-bg mobile-only"></div>
+
     <!-- Навигация -->
     <nav class="simple-nav">
         <div class="nav-container">
-            <div class="nav-logo neon-text">Razetka | Артём</div>
+            <div class="nav-logo desktop-neon">Razetka | Артём</div>
             <div class="nav-links">
-                <a href="#hero" class="nav-link hover-glow">Главная</a>
-                <a href="#about" class="nav-link hover-glow">Обо мне</a>
-                <a href="#philosophy" class="nav-link hover-glow">Философия</a>
-                <a href="#contact" class="nav-link hover-glow">Контакты</a>
+                <a href="#hero" class="nav-link desktop-hover">Главная</a>
+                <a href="#about" class="nav-link desktop-hover">Обо мне</a>
+                <a href="#philosophy" class="nav-link desktop-hover">Философия</a>
+                <a href="#contact" class="nav-link desktop-hover">Контакты</a>
             </div>
             <!-- Мобильное меню -->
             <div class="mobile-menu-btn">
@@ -52,32 +55,40 @@
     <section id="hero">
         <div class="hero-container">
             <div class="main-title">
-                <h1 class="animated-title typewriter">Razetka | Артём</h1>
+                <h1 class="animated-title desktop-only typewriter">Razetka | Артём</h1>
+                <h1 class="simple-title mobile-only">Razetka | Артём</h1>
                 <div class="title-underline"></div>
             </div>
             
             <div class="quote-container">
-                <div class="quote-card simple-glass fade-in interactive-card">
+                <div class="quote-card simple-glass desktop-interactive">
                     <p class="static-text">"Жизнь как детская рубашка короткая и обосраная, и как живёшь, спрашивает товарищ другого, как жил, вокруг одни дубы, и каждая свинья тебя сожрать хочет, вот психология того маленького среднего человека"</p>
                     <div class="quote-author">— Владимир Вольфович Жириновский.</div>
                 </div>
             </div>
 
             <div class="hero-actions">
-                <button class="pulse-btn neon-btn" onclick="scrollToSection('about')">
+                <button class="pulse-btn desktop-only neon-btn" onclick="scrollToSection('about')">
                     <span>Узнать больше</span>
                     <div class="btn-glow"></div>
                     <i class="fas fa-chevron-down btn-icon"></i>
                 </button>
-                <button class="pulse-btn secondary neon-btn" onclick="scrollToSection('contact')">
+                <button class="pulse-btn secondary desktop-only neon-btn" onclick="scrollToSection('contact')">
                     <span>Связаться</span>
                     <div class="btn-glow"></div>
                     <i class="fas fa-paper-plane btn-icon"></i>
                 </button>
+                
+                <button class="simple-btn mobile-only" onclick="scrollToSection('about')">
+                    <span>Узнать больше</span>
+                </button>
+                <button class="simple-btn mobile-only secondary" onclick="scrollToSection('contact')">
+                    <span>Связаться</span>
+                </button>
             </div>
 
-            <!-- Анимированные элементы -->
-            <div class="floating-elements">
+            <!-- Анимированные элементы только для ПК -->
+            <div class="floating-elements desktop-only">
                 <div class="floating-element element-1">💻</div>
                 <div class="floating-element element-2">🚀</div>
                 <div class="floating-element element-3">🌟</div>
@@ -88,14 +99,14 @@
     <!-- Секция "Обо мне" -->
     <section id="about">
         <div class="container">
-            <h2 class="section-title slide-in neon-text">Обо мне</h2>
+            <h2 class="section-title desktop-neon slide-in">Обо мне</h2>
             
             <div class="about-content">
-                <div class="about-card simple-glass fade-in card-3d interactive-card">
+                <div class="about-card simple-glass desktop-interactive card-3d">
                     <div class="about-header">
-                        <div class="avatar animated-gradient">А</div>
+                        <div class="avatar desktop-animated">А</div>
                         <div class="about-title">
-                            <h3 class="neon-text">Артём</h3>
+                            <h3 class="mobile-simple">Артём</h3>
                             <p>Программист & Наблюдатель</p>
                         </div>
                     </div>
@@ -110,41 +121,41 @@
                         <div class="interests">
                             <h4>Языки программирования которые я изучал: </h4>
                             <div class="interest-tags">
-                                <span class="tag hover-glow">Html</span>
-                                <span class="tag hover-glow">Php</span>
-                                <span class="tag hover-glow">Css</span>
-                                <span class="tag hover-glow">JavaScript</span>
-                                <span class="tag hover-glow">SQL</span>
-                                <span class="tag hover-glow">Python</span>
-                                <span class="tag hover-glow">Java</span>
-                                <span class="tag hover-glow">Kotlin</span>
-                                <span class="tag hover-glow">C#</span>
+                                <span class="tag desktop-hover">Html</span>
+                                <span class="tag desktop-hover">Php</span>
+                                <span class="tag desktop-hover">Css</span>
+                                <span class="tag desktop-hover">JavaScript</span>
+                                <span class="tag desktop-hover">SQL</span>
+                                <span class="tag desktop-hover">Python</span>
+                                <span class="tag desktop-hover">Java</span>
+                                <span class="tag desktop-hover">Kotlin</span>
+                                <span class="tag desktop-hover">C#</span>
                             </div>
                         </div>
                         
                         <div class="status">
-                            <div class="status-indicator neon-glow"></div>
+                            <div class="status-indicator mobile-simple"></div>
                             <span>В настоящее время: Размышляю над смыслом бытия</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="stats-grid">
-                    <div class="stat-card simple-glass hover-lift card-3d interactive-card">
+                    <div class="stat-card simple-glass desktop-interactive card-3d">
                         <div class="stat-icon">🎯</div>
-                        <div class="stat-number neon-text">75%</div>
+                        <div class="stat-number mobile-simple">75%</div>
                         <div class="stat-label">Аутентичность</div>
                     </div>
                     
-                    <div class="stat-card simple-glass hover-lift card-3d interactive-card">
+                    <div class="stat-card simple-glass desktop-interactive card-3d">
                         <div class="stat-icon">💡</div>
-                        <div class="stat-number neon-text">24/7</div>
+                        <div class="stat-number mobile-simple">24/7</div>
                         <div class="stat-label">Мыслительный процесс</div>
                     </div>
                     
-                    <div class="stat-card simple-glass hover-lift card-3d interactive-card">
+                    <div class="stat-card simple-glass desktop-interactive card-3d">
                         <div class="stat-icon">🌙</div>
-                        <div class="stat-number neon-text">∞</div>
+                        <div class="stat-number mobile-simple">∞</div>
                         <div class="stat-label">Ночных размышлений</div>
                     </div>
                 </div>
@@ -155,33 +166,33 @@
     <!-- Философская секция -->
     <section id="philosophy">
         <div class="container">
-            <h2 class="section-title slide-in neon-text">Философия существования</h2>
+            <h2 class="section-title desktop-neon slide-in">Философия существования</h2>
             
             <div class="philosophy-grid">
-                <div class="philosophy-card simple-glass hover-lift card-3d interactive-card">
+                <div class="philosophy-card simple-glass desktop-interactive card-3d">
                     <div class="card-icon">💭</div>
-                    <h3 class="neon-text">Мысли</h3>
+                    <h3 class="desktop-neon">Мысли</h3>
                     <p>Каждая мысль — это искра в темноте. Иногда она освещает путь, иногда — слепит.</p>
-                    <div class="card-sparkle"></div>
+                    <div class="card-sparkle desktop-only"></div>
                 </div>
                 
-                <div class="philosophy-card simple-glass hover-lift card-3d interactive-card">
+                <div class="philosophy-card simple-glass desktop-interactive card-3d">
                     <div class="card-icon">🌌</div>
-                    <h3 class="neon-text">Пространство</h3>
+                    <h3 class="desktop-neon">Пространство</h3>
                     <p>Между словами и молчанием рождается истинный смысл бытия.</p>
-                    <div class="card-sparkle"></div>
+                    <div class="card-sparkle desktop-only"></div>
                 </div>
                 
-                <div class="philosophy-card simple-glass hover-lift card-3d interactive-card">
+                <div class="philosophy-card simple-glass desktop-interactive card-3d">
                     <div class="card-icon">⚡</div>
-                    <h3 class="neon-text">Энергия</h3>
+                    <h3 class="desktop-neon">Энергия</h3>
                     <p>Движение — единственная константа. Покой — это иллюзия уставшего ума.</p>
-                    <div class="card-sparkle"></div>
+                    <div class="card-sparkle desktop-only"></div>
                 </div>
             </div>
 
-            <!-- Интерактивный элемент -->
-            <div class="interactive-philosophy">
+            <!-- Интерактивный элемент только для ПК -->
+            <div class="interactive-philosophy desktop-only">
                 <div class="philosophy-orb" id="philosophyOrb">
                     <div class="orb-core"></div>
                     <div class="orb-glow"></div>
@@ -194,63 +205,70 @@
     <!-- Контакты -->
     <section id="contact">
         <div class="container">
-            <h2 class="section-title slide-in neon-text">Диалог</h2>
+            <h2 class="section-title desktop-neon slide-in">Диалог</h2>
             
             <div class="contact-grid">
-                <div class="contact-info simple-glass fade-in card-3d">
-                    <h3 class="neon-text">Прямая связь</h3>
-                    <div class="contact-item interactive-card">
-                        <i class="fas fa-envelope pulse-icon"></i>
+                <div class="contact-info simple-glass desktop-interactive card-3d">
+                    <h3 class="desktop-neon">Прямая связь</h3>
+                    <div class="contact-item desktop-interactive">
+                        <i class="fas fa-envelope desktop-pulse"></i>
+                        <i class="fas fa-envelope mobile-simple"></i>
                         <span>raz_etka_2010@mail.ru</span>
                     </div>
-                    <div class="contact-item interactive-card">
-                        <i class="fas fa-phone pulse-icon"></i>
+                    <div class="contact-item desktop-interactive">
+                        <i class="fas fa-phone desktop-pulse"></i>
+                        <i class="fas fa-phone mobile-simple"></i>
                         <span>+7 (908) 864-73-54</span>
                     </div>
-                    <div class="contact-item interactive-card">
-                        <i class="fas fa-map-marker-alt pulse-icon"></i>
+                    <div class="contact-item desktop-interactive">
+                        <i class="fas fa-map-marker-alt desktop-pulse"></i>
+                        <i class="fas fa-map-marker-alt mobile-simple"></i>
                         <span>Россия, Новый Уренгой</span>
                     </div>
                     
                     <div class="social-links">
-                        <a href="https://t.me/+Wr1gSP0zM4E3ODdi" class="social-btn telegram hover-lift neon-btn" target="_blank">
-                            <i class="fab fa-telegram"></i>
-                            Telegram
-                        </a>
-                        <a href="https://github.com/razetka2010" class="social-btn github hover-lift neon-btn" target="_blank">
+                        <a href="https://github.com/razetka2010" class="social-btn github desktop-hover neon-btn" target="_blank">
                             <i class="fab fa-github"></i>
                             GitHub
+                        </a>
+                        <a href="https://t.me/+Wr1gSP0zM4E3ODdi" class="social-btn telegram mobile-simple" target="_blank">
+                            <i class="fab fa-telegram"></i>
+                            Telegram
                         </a>
                     </div>
                 </div>
 
-                <form class="contact-form simple-glass fade-in card-3d" id="contact-form">
+                <form class="contact-form simple-glass desktop-interactive card-3d" id="contact-form">
                     <div class="form-group">
-                        <input type="text" name="name" required maxlength="50" class="input-glow">
+                        <input type="text" name="name" required maxlength="50" class="desktop-glow">
                         <label>Ваше имя</label>
                         <div class="underline"></div>
                     </div>
                     
                     <div class="form-group">
-                        <input type="email" name="email" required maxlength="50" class="input-glow">
+                        <input type="email" name="email" required maxlength="50" class="desktop-glow">
                         <label>Ваш email</label>
                         <div class="underline"></div>
                     </div>
                     
                     <div class="form-group">
-                        <input type="text" name="subject" required maxlength="100" class="input-glow">
+                        <input type="text" name="subject" required maxlength="100" class="desktop-glow">
                         <label>Тема сообщения</label>
                         <div class="underline"></div>
                     </div>
                     
                     <div class="form-group">
-                        <textarea name="message" rows="5" required maxlength="1000" class="input-glow"></textarea>
+                        <textarea name="message" rows="5" required maxlength="1000" class="desktop-glow"></textarea>
                         <label>Сообщение</label>
                         <div class="underline"></div>
                         <div class="char-counter">0/1000</div>
                     </div>
                     
-                    <button type="submit" class="submit-btn hover-lift neon-btn">
+                    <button type="submit" class="submit-btn desktop-hover neon-btn">
+                        <span>Отправить сообщение</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                    <button type="submit" class="submit-btn mobile-simple">
                         <span>Отправить сообщение</span>
                         <i class="fas fa-paper-plane"></i>
                     </button>
@@ -265,7 +283,7 @@
     <footer class="simple-footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-text neon-text">
+                <div class="footer-text mobile-simple">
                     <p>"В цифровом пространстве мы все — просто код и эмоции"</p>
                 </div>
                 <div class="footer-copy">
@@ -275,8 +293,8 @@
         </div>
     </footer>
 
-    <!-- Кнопка возврата наверх -->
-    <div class="back-to-top" id="backToTop">
+    <!-- Кнопка возврата наверх только для ПК -->
+    <div class="back-to-top desktop-only" id="backToTop">
         <i class="fas fa-chevron-up"></i>
     </div>
 
