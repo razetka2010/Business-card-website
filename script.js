@@ -23,6 +23,156 @@ function initApp() {
     initCharCounter();
     initMobileMenu();
     initPageLoader();
+    createParticles();
+    initBackToTop();
+    initPhilosophyOrb();
+    initInteractiveElements();
+}
+
+// Создание частиц
+function createParticles() {
+    const container = document.getElementById('particles');
+    if (!container) return;
+
+    for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        
+        // Случайная позиция и анимация
+        particle.style.left = Math.random() * 100 + 'vw';
+        particle.style.animationDelay = Math.random() * 15 + 's';
+        particle.style.background = getRandomColor();
+        
+        container.appendChild(particle);
+    }
+}
+
+function getRandomColor() {
+    const colors = ['#ff6b6b', '#48dbfb', '#feca57', '#ff9ff3'];
+    return colors[Math.floor(Math.random() * colors.length)];
+}
+
+// Интерактивная философская сфера
+function initPhilosophyOrb() {
+    const orb = document.getElementById('philosophyOrb');
+    if (!orb) return;
+
+    let clickCount = 0;
+    const messages = [
+        "Истина где-то рядом...",
+        "Бытие определяет сознание",
+        "Мыслю, следовательно существую",
+        "Всё течёт, всё меняется",
+        "Познай самого себя"
+    ];
+
+    orb.addEventListener('click', function() {
+        clickCount++;
+        const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+        
+        // Создаем всплывающий текст
+        const floatingText = document.createElement('div');
+        floatingText.textContent = randomMessage;
+        floatingText.style.cssText = `
+            position: absolute;
+            color: var(--secondary);
+            font-weight: bold;
+            pointer-events: none;
+            animation: floatUp 2s ease-out forwards;
+            text-shadow: 0 0 10px currentColor;
+        `;
+
+        // Позиционируем относительно сферы
+        const orbRect = orb.getBoundingClientRect();
+        floatingText.style.left = '50%';
+        floatingText.style.top = '0';
+        floatingText.style.transform = 'translateX(-50%)';
+
+        orb.appendChild(floatingText);
+
+        // Удаляем текст после анимации
+        setTimeout(() => {
+            if (floatingText.parentNode) {
+                floatingText.parentNode.removeChild(floatingText);
+            }
+        }, 2000);
+
+        // Анимация сферы
+        orb.style.transform = 'scale(1.2)';
+        setTimeout(() => {
+            orb.style.transform = 'scale(1)';
+        }, 300);
+
+        // Меняем цвет каждые 3 клика
+        if (clickCount % 3 === 0) {
+            const colors = ['#48dbfb', '#ff6b6b', '#feca57', '#ff9ff3'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            document.documentElement.style.setProperty('--secondary', randomColor);
+        }
+    });
+}
+
+// Добавляем стили для всплывающего текста
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes floatUp {
+        0% {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        100% {
+            opacity: 0;
+            transform: translateX(-50%) translateY(-50px);
+        }
+    }
+`;
+document.head.appendChild(style);
+
+// Инициализация интерактивных элементов
+function initInteractiveElements() {
+    // Анимация тегов при клике
+    const tags = document.querySelectorAll('.tag');
+    tags.forEach(tag => {
+        tag.addEventListener('click', function() {
+            this.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 150);
+        });
+    });
+
+    // Параллакс эффект для фона
+    window.addEventListener('mousemove', function(e) {
+        const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
+        const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
+        
+        const shapes = document.querySelectorAll('.shape, .morphing-shape');
+        shapes.forEach((shape, index) => {
+            const speed = (index + 1) * 0.5;
+            shape.style.transform = `translate(${moveX * speed}px, ${moveY * speed}px)`;
+        });
+    });
+}
+
+// Кнопка "Наверх"
+function initBackToTop() {
+    const backToTop = document.getElementById('backToTop');
+    if (!backToTop) return;
+
+    window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+            backToTop.classList.add('visible');
+        } else {
+            backToTop.classList.remove('visible');
+        }
+    });
+
+    backToTop.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
 }
 
 // Мобильное меню
@@ -35,6 +185,8 @@ function initMobileMenu() {
         menuBtn.addEventListener('click', function() {
             mobileMenu.classList.toggle('active');
             document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+            this.querySelector('i').className = mobileMenu.classList.contains('active') ? 
+                'fas fa-times' : 'fas fa-bars';
         });
         
         // Закрытие меню при клике на ссылку
@@ -42,6 +194,7 @@ function initMobileMenu() {
             link.addEventListener('click', function() {
                 mobileMenu.classList.remove('active');
                 document.body.style.overflow = '';
+                menuBtn.querySelector('i').className = 'fas fa-bars';
             });
         });
         
@@ -50,6 +203,7 @@ function initMobileMenu() {
             if (e.target === mobileMenu) {
                 mobileMenu.classList.remove('active');
                 document.body.style.overflow = '';
+                menuBtn.querySelector('i').className = 'fas fa-bars';
             }
         });
         
@@ -58,6 +212,7 @@ function initMobileMenu() {
             if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
                 mobileMenu.classList.remove('active');
                 document.body.style.overflow = '';
+                menuBtn.querySelector('i').className = 'fas fa-bars';
             }
         });
     }
@@ -72,6 +227,17 @@ function initPageLoader() {
         setTimeout(() => {
             document.body.style.opacity = '1';
         }, 100);
+
+        // Запускаем анимации после загрузки
+        setTimeout(() => {
+            const elements = document.querySelectorAll('.fade-in, .slide-in');
+            elements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translate(0)';
+                }, index * 200);
+            });
+        }, 500);
     });
 }
 
@@ -337,6 +503,7 @@ function initSmoothScroll() {
                 if (mobileMenu && mobileMenu.classList.contains('active')) {
                     mobileMenu.classList.remove('active');
                     document.body.style.overflow = '';
+                    document.querySelector('.mobile-menu-btn i').className = 'fas fa-bars';
                 }
                 
                 const offsetTop = targetElement.offsetTop - 80;
@@ -389,7 +556,7 @@ function initHoverEffects() {
     const cards = document.querySelectorAll('.philosophy-card, .stat-card');
     cards.forEach(card => {
         card.addEventListener('mouseenter', function() {
-            if (window.innerWidth > 768) { // Только для десктопа
+            if (window.innerWidth > 768) {
                 this.style.transform = 'translateY(-5px)';
             }
         });
@@ -464,6 +631,7 @@ function scrollToSection(sectionId) {
         if (mobileMenu && mobileMenu.classList.contains('active')) {
             mobileMenu.classList.remove('active');
             document.body.style.overflow = '';
+            document.querySelector('.mobile-menu-btn i').className = 'fas fa-bars';
         }
         
         const offsetTop = element.offsetTop - 80;
@@ -557,6 +725,7 @@ window.addEventListener('resize', function() {
         if (window.innerWidth > 768 && mobileMenu && mobileMenu.classList.contains('active')) {
             mobileMenu.classList.remove('active');
             document.body.style.overflow = '';
+            document.querySelector('.mobile-menu-btn i').className = 'fas fa-bars';
         }
     }, 250);
 });
