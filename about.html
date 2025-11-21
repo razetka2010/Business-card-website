@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Calculator</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Анимированный фон для ПК -->
+    <div class="animated-bg desktop-only">
+        <div class="moving-grid"></div>
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+        <div class="morphing-shape morph-1"></div>
+        <div class="morphing-shape morph-2"></div>
+        <div class="particles-container desktop-only" id="particles"></div>
+    </div>
+
+    <!-- Простой фон для мобильных -->
+    <div class="simple-bg mobile-only"></div>
+
+    <!-- Навигация -->
+    <nav class="simple-nav">
+        <div class="nav-container">
+            <div class="nav-logo">PythonCal
+            </div>
+            <div class="nav-links">
+                <a href="#hero" class="nav-link desktop-hover">Главная</a>
+                <a href="#about" class="nav-link desktop-hover">О проекте</a>
+                <a href="#philosophy" class="nav-link desktop-hover">Философия</a>
+                <a href="#contact" class="nav-link desktop-hover">Контакты</a>
+                <a href="index.html" class="nav-link desktop-hover">Назад</a>
+            </div>
+            <div class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Мобильное меню -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-content">
+            <a href="#hero" class="mobile-nav-link">Главная</a>
+            <a href="#about" class="mobile-nav-link">О проекте</a>
+            <a href="#philosophy" class="mobile-nav-link">Философия</a>
+            <a href="#contact" class="mobile-nav-link">Контакты</a>
+        </div>
+    </div>
+
+    <!-- Герой секция -->
+    <section id="hero">
+        <div class="hero-container">
+            <div class="floating-elements desktop-only">
+                <div class="floating-element element-1">🧮</div>
+                <div class="floating-element element-2">🐍</div>
+                <div class="floating-element element-3">⚡</div>
+            </div>
+            
+            <h1 class="animated-title desktop-only">Python<br>Calculator</h1>
+            <h1 class="simple-title mobile-only">Python<br>Calculator</h1>
+            
+            <div class="title-underline"></div>
+            
+            <div class="simple-glass quote-card fade-in">
+                <p class="static-text">"Это калькулятор для упрощения жизни пользователей"</p>
+                <p class="quote-author">— Разработчик проекта</p>
+            </div>
+
+            <div class="hero-actions">
+                <a href="main.zip" download class="pulse-btn neon-btn desktop-only">
+                    <span class="btn-glow"></span>
+                    <i class="fas fa-download btn-icon"></i>
+                    Скачать код
+                 </a>
+                <a href="main.zip" download class="simple-btn mobile-only">
+                     <i class="fas fa-download"></i>
+                     Скачать код
+                 </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция "О проекте" -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title fade-in">О проекте</h2>
+            
+            <div class="about-content">
+                <div class="simple-glass about-card card-3d desktop-interactive fade-in">
+                    <div class="about-header">
+                        <div class="avatar desktop-animated">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="about-title">
+                            <h3>Калькулятор на Python</h3>
+                            <p>Базовый калькулятор</p>
+                        </div>
+                    </div>
+                    
+                    <div class="about-text">
+                        <p>Этот проект представляет собой полнофункциональный калькулятор, разработанный на Python с использованием библиотеки Tkinter. Он демонстрирует основы создания графических интерфейсов и обработки пользовательского ввода.</p>
+                    </div>
+                    
+                    <div class="interests">
+                        <h4>Технологии и навыки:</h4>
+                        <div class="interest-tags">
+                            <span class="tag desktop-hover">Python</span>
+                            <span class="tag desktop-hover">Tkinter</span>
+                            <span class="tag desktop-hover">Git</span>
+                        </div>
+                    </div>
+                    
+                    <div class="status">
+                        <div class="status-indicator desktop-neon"></div>
+                        <span>Проект завершен и готов к защите</span>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="simple-glass stat-card card-3d desktop-interactive slide-in">
+                        <div class="stat-icon">
+                            <i class="fas fa-code-branch"></i>
+                        </div>
+                        <div class="stat-number">+- 107</div>
+                        <div class="stat-label">строк кода</div>
+                    </div>
+                    
+                    <div class="simple-glass stat-card card-3d desktop-interactive slide-in">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-number">1</div>
+                        <div class="stat-label">день разроботки</div>
+                    </div>
+                    
+                    <div class="simple-glass stat-card card-3d desktop-interactive slide-in">
+                        <div class="stat-icon">
+                            <i class="fas fa-feather"></i>
+                        </div>
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">оригинальный код</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция философии -->
+    <section id="philosophy">
+        <div class="container">
+            <h2 class="section-title fade-in">Философия проекта</h2>
+            
+            <div class="philosophy-grid">
+                <div class="simple-glass philosophy-card card-3d desktop-interactive fade-in">
+                    <div class="card-sparkle"></div>
+                    <div class="card-sparkle"></div>
+                    <div class="card-sparkle"></div>
+                    <div class="card-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3>Простота</h3>
+                    <p>Сложные вещи должны быть простыми в использовании. Каждая кнопка, каждая функция - все продумано для максимального удобства.</p>
+                </div>
+                
+                <div class="simple-glass philosophy-card card-3d desktop-interactive fade-in">
+                    <div class="card-sparkle"></div>
+                    <div class="card-sparkle"></div>
+                    <div class="card-sparkle"></div>
+                    <div class="card-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3>Эстетика</h3>
+                    <p>Красивый интерфейс - это не роскошь, а необходимость. Приятный дизайн делает работу с программой комфортной.</p>
+                </div>
+                
+                <div class="simple-glass philosophy-card card-3d desktop-interactive fade-in">
+                    <div class="card-sparkle"></div>
+                    <div class="card-sparkle"></div>
+                    <div class="card-sparkle"></div>
+                    <div class="card-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>Инновации</h3>
+                    <p>Даже в простых проектах можно применить современные подходы и технологии для создания лучшего продукта.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Подвал -->
+    <footer class="simple-footer">
+        <div class="container">
+            <div class="footer-content">
+                <p class="footer-text">"Программирование - это не просто написание кода, это искусство создания решений"</p>
+                <p class="footer-copy">&copy; 2024 Python Calculator Project. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Кнопка возврата наверх -->
+    <div class="back-to-top desktop-only" id="backToTop">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
