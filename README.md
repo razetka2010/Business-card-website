@@ -27,28 +27,3 @@
 <img src="https://img.shields.io/badge/VS_Code-007ACC?style=for-the-badge&logo=visual-studio-code&logoColor=white" />
 
 </div>
-
-## 🎡 Активность
-
-<div align="center">
-
-[![GitHub Stats](https://github-readme-stats.vercel.app/api?username=razetka2010&show_icons=true&theme=radical&hide_border=true&border_radius=20)](https://github.com/razetka2010)
-[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=razetka2010&layout=compact&theme=merko&hide_border=true&border_radius=20)](https://github.com/razetka2010)
-
-</div>
-
-## 🎪 Достижения
-
-<div align="center">
-
-[![Trophy](https://github-profile-trophy.vercel.app/?username=razetka2010&theme=onedark&no-frame=true&row=2&column=4)](https://github.com/ryo-ma/github-profile-trophy)
-
-</div>
-
----
-
-<div align="center">
-
-### 🌈 **Теперь здесь ВСЕ цвета радуги!** 🎨
-
-</div>
